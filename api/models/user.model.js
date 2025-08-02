@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       type: String,
     },
+    avatar: {
+      type: String,
+      default:
+        "https://www.silcharmunicipality.in/wp-content/uploads/2021/02/male-face.jpg",
+    },
   },
   { timestamps: true }
 );
