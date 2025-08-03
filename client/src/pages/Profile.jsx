@@ -1,21 +1,29 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+} from "../redux/user/userSlice.js";
 
 const Profile = () => {
   const fileRef = useRef(null);
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
   const [file, setFile] = useState(undefined);
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
+  const [imgError, setImgError] = useState(null);
+  const [updateSucess, setupdateSucess] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (file) {
-      handleFileUpload(file);
+      handleFileUpload();
     }
   }, [file]);
+
   const handleFileUpload = async () => {
     const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-    const uploadPreset = "avatar"; // You can use your preset name or create one in Cloudinary.
+    const uploadPreset = "avatar";
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", uploadPreset);
@@ -33,17 +41,18 @@ const Profile = () => {
       const data = await res.json();
 
       if (data.secure_url) {
-        console.log(data);
-
         console.log("Cloudinary Image URL:", data.secure_url);
         setFormData((prev) => ({ ...prev, avatar: data.secure_url }));
       } else {
         console.error("Upload failed", data);
+        setImgError("Image upload failed. Please try again.");
       }
     } catch (err) {
       console.error("Error uploading file:", err);
+      setImgError("Error uploading image. Please try again.");
     }
   };
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
 
@@ -56,19 +65,57 @@ const Profile = () => {
       ];
 
       if (!allowedTypes.includes(selectedFile.type)) {
-        setError("Please select a valid image file (JPEG, PNG, JPG, or WEBP).");
+        setImgError(
+          "Please select a valid image file (JPEG, PNG, JPG, or WEBP)."
+        );
+        return;
+      }
+      if (selectedFile.size > 2 * 1024 * 1024) {
+        setImgError("File size too large (max 2MB allowed)");
         return;
       }
 
-      setFile(selectedFile); // Only set file if it's valid
-      setError(null);
+      setFile(selectedFile);
+      setImgError(null);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart());
+
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch(updateUserFailure(data.message));
+
+        return;
+      }
+
+      dispatch(updateUserSuccess(data));
+      setupdateSucess(true);
+    } catch (error) {
+      dispatch(updateUserFailure(error.message));
     }
   };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-bold text-center my-7">Profile</h1>
-      <form className=" flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           onChange={handleFileChange}
           type="file"
@@ -82,33 +129,53 @@ const Profile = () => {
           alt="profile"
           className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
         />
-        {error && <p className="text-red-500 text-sm font-semibold self-center ">{error}</p>}
+        {imgError && (
+          <p className="text-red-500 text-sm font-semibold self-center">
+            {imgError}
+          </p>
+        )}
+
         <input
           type="text"
           placeholder="Username"
           className="border p-3 rounded-lg"
           id="username"
+          onChange={handleChange}
+          defaultValue={currentUser.username}
         />
         <input
           type="email"
           placeholder="Email"
           className="border p-3 rounded-lg"
           id="email"
+          onChange={handleChange}
+          defaultValue={currentUser.email}
         />
         <input
-          type="text"
+          type="password"
           placeholder="Password"
           className="border p-3 rounded-lg"
           id="password"
+          onChange={handleChange}
         />
-        <button className="bg-emerald-500 text-white rounded-lg p-3 uppercase hover:placeholder-opacity-90 disabled:opacity-75">
-          update
+        <button
+          disabled={loading}
+          type="submit"
+          className="bg-emerald-500 text-white rounded-lg p-3 uppercase hover:opacity-90 disabled:opacity-75" // Fixed hover class
+        >
+          {loading ? "Loading..." : "Update"}
         </button>
       </form>
-      <div className=" flex justify-between mt-5 ">
+      <div className="flex justify-between mt-5">
         <span className="text-red-700 cursor-pointer">Delete Account</span>
         <span className="text-red-700 cursor-pointer">Sign out</span>
       </div>
+      <p className="text-red-500 self-center text-center">
+        {error ? error : ""}
+      </p>
+      <p className="text-green-500  font-semibold">
+        {updateSucess ? "User Updated Successfully" : ""}
+      </p>
     </div>
   );
 };
