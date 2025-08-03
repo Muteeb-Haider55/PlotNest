@@ -1,3 +1,4 @@
+import req from "express/lib/request.js";
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
 import bcryptjs from "bcryptjs";
@@ -27,6 +28,21 @@ export const updateUser = async (req, res, next) => {
     );
     const { password, ...rest } = updatedUser._doc;
     res.status(200).json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteUser = async (req, res, next) => {
+  if (req.user.id !== req.params.id)
+    return next(errorHandler(401, "You can only Delete your account!"));
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.clearCookie("access_token");
+    res
+      .status(200)
+      .json("User deleted successfully")
+      
   } catch (error) {
     next(error);
   }
