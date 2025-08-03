@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   updateUserStart,
   updateUserSuccess,
@@ -196,10 +197,16 @@ const Profile = () => {
         <button
           disabled={loading}
           type="submit"
-          className="bg-emerald-500 text-white rounded-lg p-3 uppercase hover:opacity-90 disabled:opacity-75" // Fixed hover class
+          className="bg-slate-500 text-white rounded-lg p-3 uppercase hover:opacity-90 disabled:opacity-75" // Fixed hover class
         >
           {loading ? "Loading..." : "Update"}
         </button>
+        <Link
+          to="/create-listing"
+          className="bg-emerald-500 text-white rounded-lg p-3 uppercase hover:opacity-90 disabled:opacity-75 text-center"
+        >
+          Create Listing
+        </Link>
       </form>
       <div className="flex justify-between mt-5">
         <span
