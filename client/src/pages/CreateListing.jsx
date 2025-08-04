@@ -1,6 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 
 const CreateListing = () => {
+  const [files, setFiles] = useState([]);
+  const [formData, setFormData] = useState({
+    imageUrls: [],
+  });
+  const [uploadError, setUploadError] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const storeImage = async (file) => {
+    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+    const uploadPreset = "ListingImages"; // Ensure this exists in Cloudinary
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", uploadPreset);
+
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const data = await res.json();
+    if (data.secure_url) {
+      return data.secure_url;
+    } else {
+      throw new Error("Image upload failed");
+    }
+  };
+
+  const handleImageSubmit = async () => {
+    setUploadError(null);
+    setUploading(true);
+    if (files.length === 0) {
+      setUploadError("Please select at least one image.");
+      setUploading(false);
+      return;
+    }
+
+    if (formData.imageUrls.length + files.length > 6) {
+      setUploadError("You can only upload a total of 6 images.");
+      setUploading(false);
+      return;
+    }
+
+    try {
+      const uploadPromises = files.map((file) => storeImage(file));
+      const urls = await Promise.all(uploadPromises);
+      setFormData((prev) => ({
+        ...prev,
+        imageUrls: [...prev.imageUrls, ...urls],
+      }));
+      setFiles([]);
+      setUploading(false);
+    } catch (err) {
+      console.error("Image upload error:", err);
+      setUploadError("Failed to upload images. Please try again.");
+      setUploading(false);
+    }
+  };
+  const handleRemoveImage = (index) => {
+    setFormData({
+      ...formData,
+      imageUrls: formData.imageUrls.filter((_, i) => i !== index),
+    });
+  };
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold text-center my-7">Create a Listing</h1>
@@ -113,16 +179,49 @@ const CreateListing = () => {
           </p>
           <div className="flex gap-4">
             <input
+              //   onChange={(e) => setFiles([...e.target.files])}
+              onChange={(e) => {
+                const selectedFiles = Array.from(e.target.files);
+                setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
+              }}
               className="p-3 border border-x-gray-300 rounded w-full"
               type="file"
               id="images"
               accept="images/*"
               multiple
             />
-            <button className="p-3 text-gray-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80">
-              Upload
+            <button
+              onClick={handleImageSubmit}
+              type="button"
+              disabled={uploading}
+              className="p-3 text-gray-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
+            >
+              {uploading ? "Uploading..." : "Upload"}
             </button>
           </div>
+          {uploadError && (
+            <p className="text-red-500 font-semibold text-sm">{uploadError}</p>
+          )}
+          {formData.imageUrls.length > 0 &&
+            formData.imageUrls.map((url, index) => (
+              <div
+                key={index}
+                className="flex justify-between p-3 border items-center"
+              >
+                <img
+                  src={url}
+                  alt="listing image"
+                  className="w-20 h-20 object-contain rounded-lg"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveImage(index)}
+                  className="p-3 text-red-700 rounded-lg uppercase hover:opacity-75"
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
           <button className="p-3 bg-emerald-600 text-white rounded-lg uppercase hover:placeholder-opacity-95 disabled:opacity-80">
             Create Listing
           </button>

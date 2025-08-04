@@ -48,7 +48,7 @@ const Profile = () => {
       const data = await res.json();
 
       if (data.secure_url) {
-        console.log("Cloudinary Image URL:", data.secure_url);
+        console.log("Cloudinary Images URL:", data.secure_url);
         setFormData((prev) => ({ ...prev, avatar: data.secure_url }));
       } else {
         console.error("Upload failed", data);
