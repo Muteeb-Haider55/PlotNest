@@ -7,6 +7,7 @@ import {
   signInSuccess,
 } from "../redux/user/userSlice.js";
 import OAuth from "../components/OAuth.jsx";
+import Loader from "../components/Loader.jsx";
 const SignIn = () => {
   {
     /* emerald-600 */
@@ -38,13 +39,13 @@ const SignIn = () => {
         return;
       }
       dispatch(signInSuccess(data));
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
   };
   return (
-    <div className=" p-3 max-w-lg mx-auto">
+    <div className=" p-3 max-w-lg mx-auto bg-emerald-50">
       <h1 className="text-3xl text-center font-bold my-7">Sign In</h1>
       <form onSubmit={handlSubmit} className="flex flex-col gap-4">
         <input
@@ -65,7 +66,7 @@ const SignIn = () => {
           disabled={loading}
           className=" bg-emerald-600 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
         >
-          {loading ? "Loading ..." : "Sign In"}
+          {loading ? <Loader /> : "Sign In"}
         </button>
         <OAuth />
       </form>

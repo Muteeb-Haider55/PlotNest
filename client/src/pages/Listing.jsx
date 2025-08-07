@@ -15,6 +15,7 @@ import {
   FaShare,
 } from "react-icons/fa";
 import Contact from "../components/Contact";
+import Loader from "../components/Loader";
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -52,9 +53,12 @@ export default function Listing() {
     fetchListing();
   }, [params.listingId]);
 
+  if (loading) {
+    return <Loader />;
+  }
   return (
-    <main>
-      {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
+    <main className="bg-emerald-50">
+      {loading && <Loader />}
       {error && (
         <p className="text-center my-7 text-2xl">Something went wrong!</p>
       )}

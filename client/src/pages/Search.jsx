@@ -122,7 +122,7 @@ const Search = () => {
     setListings([...listings, ...data]);
   };
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row bg-emerald-50">
       <div className=" p-7 border-b-2 md:border-r-2 md:min-h-screen">
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="flex items-center gap-2">
@@ -223,7 +223,7 @@ const Search = () => {
           </button>
         </form>
       </div>
-      <div className=" flex-1 ">
+      <div className=" flex-1 pl-6 py-3 ">
         <h1 className="text-3xl font-semibold border-b mt-5 p-3 text-slate-600">
           Listing Results
         </h1>

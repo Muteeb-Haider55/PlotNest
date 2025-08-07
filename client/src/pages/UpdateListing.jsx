@@ -161,7 +161,7 @@ const UpdateListing = () => {
     }
   };
   return (
-    <main className="p-3 max-w-4xl mx-auto">
+    <main className="p-3 max-w-4xl mx-auto bg-emerald-50">
       <h1 className="text-3xl font-bold text-center my-7">Update a Listing</h1>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-col gap-4 flex-1">

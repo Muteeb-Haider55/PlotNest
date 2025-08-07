@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import Loader from "../components/Loader";
 
 const SignUp = () => {
   {
@@ -43,7 +44,7 @@ const SignUp = () => {
     }
   };
   return (
-    <div className=" p-3 max-w-lg mx-auto">
+    <div className=" p-3 max-w-lg mx-auto bg-emerald-50">
       <h1 className="text-3xl text-center font-bold my-7">Sign Up</h1>
       <form onSubmit={handlSubmit} className="flex flex-col gap-4">
         <input
@@ -71,7 +72,7 @@ const SignUp = () => {
           disabled={loading}
           className=" bg-emerald-600 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
         >
-          {loading ? "Loading ..." : "Sign up"}
+          {loading ? <Loader /> : "Sign up"}
         </button>
         <OAuth />
       </form>

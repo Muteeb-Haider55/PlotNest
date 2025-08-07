@@ -12,6 +12,7 @@ import {
   signOutUserFailure,
   signOutUserSuccess,
 } from "../redux/user/userSlice.js";
+import Loader from "../components/Loader.jsx";
 
 const Profile = () => {
   const fileRef = useRef(null);
@@ -181,8 +182,12 @@ const Profile = () => {
       console.log(error.message);
     }
   };
+  if (loading) {
+    return <Loader />;
+  }
   return (
-    <div className="p-3 max-w-lg mx-auto">
+    <div className="p-3 max-w-lg mx-auto bg-emerald-50">
+      {loading && <Loader />}
       <h1 className="text-3xl font-bold text-center my-7">Profile</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
