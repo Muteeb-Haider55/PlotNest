@@ -103,7 +103,7 @@ const Header = () => {
   }, [location.search]);
 
   return (
-    <header className="bg-emerald-800 shadow-md">
+    <header className="bg-emerald-700 shadow-md fixed top-0 left-0 right-0 z-50 ">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
         <Link to="/">
           <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
@@ -113,7 +113,7 @@ const Header = () => {
         </Link>
         <form
           onSubmit={handleSubmit}
-          className="bg-emerald-700 p-3 rounded-lg flex items-center"
+          className="bg-emerald-600 p-3 rounded-lg flex items-center"
         >
           <input
             onChange={(e) => setSearchTerm(e.target.value)}
