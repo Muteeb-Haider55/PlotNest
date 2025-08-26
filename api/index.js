@@ -10,13 +10,19 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 10000, // helps handle slow or failed connections
+  })
   .then(() => {
     console.log("Connected to MongoDB");
   })
   .catch((err) => {
-    console.log(err);
+    console.log("MongoDB connection error:", err);
   });
+
+
 
 const app = express();
 
