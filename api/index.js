@@ -1,6 +1,4 @@
-
-
-
+import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -21,6 +19,13 @@ mongoose
   });
 
 const app = express();
+
+app.use(
+  cors({
+    origin: "https://plot-nest-f9vy.vercel.app", // ✅ use your actual frontend URL here
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
