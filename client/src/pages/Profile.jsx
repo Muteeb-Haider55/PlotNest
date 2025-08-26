@@ -129,9 +129,12 @@ const Profile = () => {
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`${API_BASE_URL}/api/user/delete/${currentUser._id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${API_BASE_URL}/api/user/delete/${currentUser._id}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
@@ -159,7 +162,15 @@ const Profile = () => {
   const handlShowListings = async () => {
     try {
       setShowListingError(false);
-      const res = await fetch(`${API_BASE_URL}/api/user/listings/${currentUser._id}`);
+      //fetch(`${API_BASE_URL}/api/user/listings/${currentUser._id}`);
+      const res = await fetch(
+        `${API_BASE_URL}/api/user/listings/${currentUser._id}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
       const data = await res.json();
       if (data.success === false) {
         setShowListingError(true);
@@ -173,9 +184,12 @@ const Profile = () => {
   };
   const handleListingDelete = async (listingId) => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/listing/delete/${listingId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${API_BASE_URL}/api/listing/delete/${listingId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = res.json();
       if (data.success === false) {
         console.log(data.message);
