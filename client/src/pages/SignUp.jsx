@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
 import Loader from "../components/Loader";
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const SignUp = () => {
   {
     /* emerald-600 */
@@ -22,7 +22,7 @@ const SignUp = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch("/api/auth/signup", {
+      const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
