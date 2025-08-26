@@ -134,6 +134,7 @@ const CreateListing = () => {
           ...formData,
           userRef: currentUser._id,
         }),
+        credentials: "include", 
       });
       const data = await res.json();
       if (data.success === false) {
