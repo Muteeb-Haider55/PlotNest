@@ -4,6 +4,8 @@ import { app } from "../firbase.js";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice.js";
 import { useNavigate } from "react-router-dom";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const OAuth = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -12,7 +14,7 @@ const OAuth = () => {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
-      const res = await fetch("/api/auth/google", {
+      const res = await fetch(`${API_BASE_URL}/api/auth/google`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

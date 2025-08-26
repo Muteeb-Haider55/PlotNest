@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Contact({ listing }) {
   const [landlord, setLandlord] = useState(null);
@@ -11,7 +12,7 @@ export default function Contact({ listing }) {
   useEffect(() => {
     const fetchLandlord = async () => {
       try {
-        const res = await fetch(`/api/user/${listing.userRef}`);
+        const res = await fetch(`${API_BASE_URL}/api/user/${listing.userRef}`);
         const data = await res.json();
         setLandlord(data);
       } catch (error) {

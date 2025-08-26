@@ -6,6 +6,8 @@ import { Navigation } from "swiper/modules";
 import SwiperCore from "swiper";
 import ListiningItem from "../components/ListiningItem";
 import Loader from "../components/Loader";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const Home = () => {
   const [offerListings, setOfferListings] = useState([]);
@@ -17,7 +19,7 @@ const Home = () => {
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
-        const res = await fetch(`/api/listing/get?offer=true&limit=6`);
+        const res = await fetch(`${API_BASE_URL}/api/listing/get?offer=true&limit=6`);
         const data = await res.json();
         setOfferListings(data);
         fetchRentListings();
@@ -29,7 +31,7 @@ const Home = () => {
 
     const fetchRentListings = async () => {
       try {
-        const res = await fetch(`/api/listing/get?type=rent&limit=6`);
+        const res = await fetch(`${API_BASE_URL}/api/listing/get?type=rent&limit=6`);
         const data = await res.json();
         setRentListings(data);
         fetchSaleListings();
@@ -41,7 +43,7 @@ const Home = () => {
 
     const fetchSaleListings = async () => {
       try {
-        const res = await fetch(`/api/listing/get?type=sale&limit=6`);
+        const res = await fetch(`${API_BASE_URL}/api/listing/get?type=sale&limit=6`);
         const data = await res.json();
         setSaleListings(data);
       } catch (error) {

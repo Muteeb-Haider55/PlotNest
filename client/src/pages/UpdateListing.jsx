@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const UpdateListing = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -52,7 +54,7 @@ const UpdateListing = () => {
   useEffect(() => {
     const fetchListing = async () => {
       const listingId = params.listingId;
-      const res = await fetch(`/api/listing/get/${listingId}`);
+      const res = await fetch(`${API_BASE_URL}/api/listing/get/${listingId}`);
       const data = await res.json();
       if (data.success === false) {
         console.log(data.message);
@@ -138,16 +140,19 @@ const UpdateListing = () => {
         return setError("Discount price must be lower then regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch(`/api/listing/update/${params.listingId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          userRef: currentUser._id,
-        }),
-      });
+      const res = await fetch(
+        `${API_BASE_URL}/api/listing/update/${params.listingId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            userRef: currentUser._id,
+          }),
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         setError(data.message);

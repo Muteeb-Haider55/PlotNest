@@ -5,6 +5,8 @@ import SwiperCore from "swiper";
 import { useSelector } from "react-redux";
 import { Navigation } from "swiper/modules";
 import "swiper/css/bundle";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 import {
   FaBath,
   FaBed,
@@ -33,7 +35,9 @@ export default function Listing() {
     const fetchListing = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/listing/get/${params.listingId}`);
+        const res = await fetch(
+          `${API_BASE_URL}/api/listing/get/${params.listingId}`
+        );
         const data = await res.json();
         if (data.success === false) {
           setError(true);

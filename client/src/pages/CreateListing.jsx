@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const CreateListing = () => {
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
@@ -113,7 +115,7 @@ const CreateListing = () => {
       });
     }
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -123,7 +125,7 @@ const CreateListing = () => {
         return setError("Discount price must be lower then regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`${API_BASE_URL}/api/listing/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

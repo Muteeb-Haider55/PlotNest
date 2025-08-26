@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 import {
   updateUserStart,
   updateUserSuccess,
@@ -99,13 +101,16 @@ const Profile = () => {
     try {
       dispatch(updateUserStart());
 
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${API_BASE_URL}/api/user/update/${currentUser._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await res.json();
 
@@ -124,7 +129,7 @@ const Profile = () => {
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/user/delete/${currentUser._id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -140,7 +145,7 @@ const Profile = () => {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch("/api/auth/signout");
+      const res = await fetch(`${API_BASE_URL}/api/auth/signout`);
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
@@ -154,7 +159,7 @@ const Profile = () => {
   const handlShowListings = async () => {
     try {
       setShowListingError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const res = await fetch(`${API_BASE_URL}/api/user/listings/${currentUser._id}`);
       const data = await res.json();
       if (data.success === false) {
         setShowListingError(true);
@@ -168,7 +173,7 @@ const Profile = () => {
   };
   const handleListingDelete = async (listingId) => {
     try {
-      const res = await fetch(`/api/listing/delete/${listingId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/listing/delete/${listingId}`, {
         method: "DELETE",
       });
       const data = res.json();
