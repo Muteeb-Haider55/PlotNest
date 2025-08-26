@@ -1,3 +1,6 @@
+
+
+
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -5,12 +8,13 @@ import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
 import listingRouter from "./routes/listing.route.js";
 import cookieParser from "cookie-parser";
-import path from "path";
+
 dotenv.config();
+
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
-    console.log("connected to db");
+    console.log("Connected to MongoDB");
   })
   .catch((err) => {
     console.log(err);
@@ -18,21 +22,19 @@ mongoose
 
 const app = express();
 
-//middlewares
 app.use(express.json());
 app.use(cookieParser());
 
-app.listen(3000, () => {
-  console.log("Server is running on 300!");
-});
-
-//Routes
+// Routes
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
+
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
+
+// Error handler
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
@@ -42,3 +44,7 @@ app.use((err, req, res, next) => {
     message,
   });
 });
+
+// ⛔ REMOVE app.listen
+// ✅ Instead, export the app for Vercel
+export default app;
