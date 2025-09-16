@@ -22,16 +22,22 @@ mongoose
     console.log("MongoDB connection error:", err);
   });
 
-
-
 const app = express();
 
-app.use(
-  cors({
-    origin: "https://plot-nest-f9vy.vercel.app", // ✅ use your actual frontend URL here
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: ["https://plot-nest-f9vy.vercel.app"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
+
+// app.use(
+//   cors({
+//     origin: "", // ✅ use your actual frontend URL here
+//     credentials: true,
+//   })
+// );
 
 app.use(express.json());
 app.use(cookieParser());

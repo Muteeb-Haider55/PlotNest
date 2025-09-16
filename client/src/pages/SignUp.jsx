@@ -22,13 +22,16 @@ const SignUp = () => {
     e.preventDefault();
     try {
       setLoading(true);
+
       const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
       if (data.success === false) {
         setLoading(false);
