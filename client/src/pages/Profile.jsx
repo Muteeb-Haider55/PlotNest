@@ -46,10 +46,6 @@ const Profile = () => {
         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
         {
           method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: formData,
         }
       );
