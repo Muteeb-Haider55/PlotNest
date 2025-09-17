@@ -144,6 +144,7 @@ const UpdateListing = () => {
         `${API_BASE_URL}/api/listing/update/${params.listingId}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
