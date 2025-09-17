@@ -188,6 +188,7 @@ const Profile = () => {
         `${API_BASE_URL}/api/listing/delete/${listingId}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       const data = res.json();
