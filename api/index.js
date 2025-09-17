@@ -13,7 +13,7 @@ mongoose
   .connect(process.env.MONGO, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 10000, // helps handle slow or failed connections
+    serverSelectionTimeoutMS: 10000,
   })
   .then(() => {
     console.log("Connected to MongoDB");
@@ -25,33 +25,23 @@ mongoose
 const app = express();
 
 const corsOptions = {
-  origin: ["https://plot-nest-f9vy.vercel.app"],
+  origin: process.env.FRONTEND_URL,
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));
 
-// app.use(
-//   cors({
-//     origin: "", // ✅ use your actual frontend URL here
-//     credentials: true,
-//   })
-// );
-
 app.use(express.json());
 app.use(cookieParser());
-
-// Routes
-app.use("/api/user", userRouter);
-app.use("/api/auth", authRouter);
-app.use("/api/listing", listingRouter);
 
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
+app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/listing", listingRouter);
 
-// Error handler
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
@@ -62,6 +52,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-// ⛔ REMOVE app.listen
-// ✅ Instead, export the app for Vercel
 export default app;

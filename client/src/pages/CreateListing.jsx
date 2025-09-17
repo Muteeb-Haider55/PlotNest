@@ -38,6 +38,10 @@ const CreateListing = () => {
       `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
       {
         method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: formData,
       }
     );
@@ -134,7 +138,7 @@ const CreateListing = () => {
           ...formData,
           userRef: currentUser._id,
         }),
-        credentials: "include", 
+        credentials: "include",
       });
       const data = await res.json();
       if (data.success === false) {
