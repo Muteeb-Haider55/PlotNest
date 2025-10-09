@@ -329,9 +329,7 @@ const Profile = () => {
             </div>
           ))}
         </div>
-      ) : (
-        <p className="text-red-500 text-center"> No Listing Found! </p>
-      )}
+      ) : null}
     </div>
   );
 };
