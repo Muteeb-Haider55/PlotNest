@@ -54,24 +54,30 @@ const ShowAllListings = () => {
   };
 
   return (
-    <main className="p-4 max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">All Listings</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {listings.map((listing) => (
-          <ListiningItem key={listing._id} listing={listing} />
-        ))}
-      </div>
-      <div className="flex justify-center mt-6">
-        <button
-          onClick={loadMore}
-          disabled={loading}
-          className="bg-emerald-600 text-white px-4 py-2 rounded-lg disabled:opacity-60"
-        >
-          {loading ? "Loading" : "Load more"}
-        </button>
-      </div>
-    </main>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <main className="p-4 max-w-6xl mx-auto pt-10">
+          <h1 className="text-2xl font-bold mb-4">All Listings</h1>
+          {error && <p className="text-red-500">{error}</p>}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {listings.map((listing) => (
+              <ListiningItem key={listing._id} listing={listing} />
+            ))}
+          </div>
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={loadMore}
+              disabled={loading}
+              className="bg-emerald-600 text-white px-4 py-2 rounded-lg disabled:opacity-60"
+            >
+              {loading ? "Loading" : "Load more"}
+            </button>
+          </div>
+        </main>
+      )}
+    </>
   );
 };
 
