@@ -54,6 +54,11 @@ const Header = () => {
               Home
             </li>
           </Link>
+          <Link to="/all-listings">
+            <li className="hidden sm:inline text-emerald-100 hover:text-white transition">
+              All Listings
+            </li>
+          </Link>
           <Link to="/about">
             <li className="hidden sm:inline text-emerald-100 hover:text-white transition">
               About

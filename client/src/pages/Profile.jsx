@@ -294,7 +294,7 @@ const Profile = () => {
       <p className="text-red-700 mt-5">
         {showListingError ? "Error Showing listings" : ""}
       </p>
-      {userListings && userListings.length > 0 && (
+      {userListings && userListings.length > 0 ? (
         <div className=" flex flex-col gap-9">
           <h1 className="text-center text-2xl font-bold mt-7">Your Listings</h1>
           {userListings.map((listing) => (
@@ -329,6 +329,8 @@ const Profile = () => {
             </div>
           ))}
         </div>
+      ) : (
+        <p className="text-red-500 text-center"> No Listing Found! </p>
       )}
     </div>
   );

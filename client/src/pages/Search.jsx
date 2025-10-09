@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListiningItem from "../components/ListiningItem";
+import Loader from "../components/Loader";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Search = () => {
@@ -124,7 +125,7 @@ const Search = () => {
     setListings([...listings, ...data]);
   };
   return (
-    <div className="flex flex-col md:flex-row bg-emerald-50">
+    <div className="flex flex-col pt-[48px] md:flex-row bg-emerald-50">
       <div className=" p-7 border-b-2 md:border-r-2 md:min-h-screen">
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="flex items-center gap-2">
@@ -235,7 +236,7 @@ const Search = () => {
           )}
           {loading && (
             <p className="text-xl text-slate-700 text-center w-full">
-              Loading...
+              <Loader />
             </p>
           )}
           {!loading &&
