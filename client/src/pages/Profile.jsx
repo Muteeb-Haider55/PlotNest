@@ -109,6 +109,7 @@ const Profile = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
+          credentials: "include",
         }
       );
 
@@ -133,6 +134,7 @@ const Profile = () => {
         `${API_BASE_URL}/api/user/delete/${currentUser._id}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       const data = await res.json();
@@ -148,7 +150,10 @@ const Profile = () => {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      const res = await fetch(`${API_BASE_URL}/api/auth/signout`);
+      const res = await fetch(`${API_BASE_URL}/api/auth/signout`, {
+        method: "GET",
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
