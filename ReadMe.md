@@ -92,6 +92,3 @@ I also added a short checklist in the case study folder to help others avoid the
 
 ---
 
-## 🏷️ Hashtags
-
-#MERN #ReactJS #NodeJS #FullStack #WebApp #PlotNest #Cloudinary #Vercel #CaseStudy
