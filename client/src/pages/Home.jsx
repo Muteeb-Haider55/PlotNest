@@ -61,17 +61,20 @@ const Home = () => {
   }
 
   return (
-    <div className="bg-emerald-50 min-h-screen">
+    <div className="bg-gradient-to-b from-emerald-50 via-emerald-50 to-white min-h-screen">
       {/* Hero Section */}
-      <div className="relative bg-white overflow-hidden">
+      <div className="relative overflow-hidden">
         {/* Background gradient layer */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 to-emerald-100 opacity-95"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-emerald-100 to-emerald-50 opacity-95"></div>
 
         {/* Content container */}
-        <div className="relative max-w-7xl mx-auto px-6 py-24 sm:py-32 lg:px-8 lg:py-40">
+        <div className="relative max-w-7xl mx-auto px-6 pt-28 pb-16 sm:pt-32 sm:pb-20 lg:px-8 lg:pt-36 lg:pb-24">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             {/* Text content */}
             <div className="lg:w-1/2 space-y-8">
+              <span className="inline-flex items-center rounded-full border border-emerald-200 bg-white/70 px-4 py-1 text-sm font-medium text-emerald-700 shadow-sm">
+                Premium Property Experience
+              </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 <span className="block text-emerald-800">Discover Your</span>
                 <span className="block text-emerald-600">Perfect Property</span>
@@ -86,13 +89,13 @@ const Home = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   to="/search"
-                  className="px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-center"
+                  className="px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 text-center"
                 >
                   Explore Listings
                 </Link>
                 <Link
                   to="/about"
-                  className="px-8 py-3.5 border border-emerald-600 text-emerald-600 hover:bg-emerald-50 font-semibold rounded-lg transition-all duration-200 text-center"
+                  className="px-8 py-3.5 border border-emerald-600 text-emerald-700 hover:bg-white/60 font-semibold rounded-xl transition-all duration-200 text-center"
                 >
                   Learn More
                 </Link>
@@ -101,12 +104,12 @@ const Home = () => {
 
             {/* Image placeholder - replace with actual property image */}
             <div className="lg:w-1/2">
-              <div className="relative rounded-xl overflow-hidden shadow-xl aspect-w-16 aspect-h-9">
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-300 opacity-20"></div>
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/70">
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-emerald-300/20"></div>
                 <img
                   src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
                   alt="Beautiful home"
-                  className="w-full h-full object-cover"
+                  className="w-full h-[420px] object-cover"
                 />
               </div>
             </div>
@@ -115,8 +118,11 @@ const Home = () => {
       </div>
 
       {/* Swiper */}
-      <div className="bg-emerald-50 p-4">
-        <Swiper navigation className="max-w-8xl mx-auto rounded-lg shadow-lg">
+      <div className="px-4 sm:px-6 lg:px-8 -mt-2 sm:-mt-4">
+        <Swiper
+          navigation
+          className="premium-swiper max-w-7xl mx-auto rounded-2xl overflow-hidden shadow-2xl border border-emerald-100"
+        >
           {offerListings &&
             offerListings.length > 0 &&
             offerListings.map((listing) => (
@@ -126,7 +132,7 @@ const Home = () => {
                     background: `url(${listing.imageUrls[0]}) center no-repeat`,
                     backgroundSize: "cover",
                   }}
-                  className="h-[500px]"
+                  className="h-[320px] sm:h-[420px] lg:h-[500px]"
                 ></div>
               </SwiperSlide>
             ))}
@@ -134,21 +140,21 @@ const Home = () => {
       </div>
 
       {/* Listings */}
-      <div className="max-w-6xl mx-auto p-6 flex flex-col gap-8 my-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col gap-10">
         {offerListings && offerListings.length > 0 && (
-          <div className="">
-            <div className="my-3">
-              <h2 className="text-2xl font-semibold text-emerald-800">
+          <div className="rounded-2xl bg-white/75 border border-emerald-100 shadow-sm p-5 sm:p-6">
+            <div className="my-3 flex items-end justify-between gap-4 flex-wrap">
+              <h2 className="text-2xl font-semibold text-emerald-800 tracking-tight">
                 Recent Offers
               </h2>
               <Link
-                className="text-sm text-emerald-600 hover:underline"
+                className="text-sm font-medium text-emerald-700 hover:text-emerald-900 hover:underline"
                 to={"/search?offer=true"}
               >
                 Show more offers
               </Link>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-5">
               {offerListings.map((listing) => (
                 <ListiningItem listing={listing} key={listing._id} />
               ))}
@@ -157,19 +163,19 @@ const Home = () => {
         )}
 
         {rentListings && rentListings.length > 0 && (
-          <div className="">
-            <div className="my-3">
-              <h2 className="text-2xl font-semibold text-emerald-800">
+          <div className="rounded-2xl bg-white/75 border border-emerald-100 shadow-sm p-5 sm:p-6">
+            <div className="my-3 flex items-end justify-between gap-4 flex-wrap">
+              <h2 className="text-2xl font-semibold text-emerald-800 tracking-tight">
                 Recent places for Rent
               </h2>
               <Link
-                className="text-sm text-emerald-600 hover:underline"
+                className="text-sm font-medium text-emerald-700 hover:text-emerald-900 hover:underline"
                 to={"/search?rent=true"}
               >
                 Show more rentals
               </Link>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-5">
               {rentListings.map((listing) => (
                 <ListiningItem listing={listing} key={listing._id} />
               ))}
@@ -178,19 +184,19 @@ const Home = () => {
         )}
 
         {saleListings && saleListings.length > 0 && (
-          <div className="">
-            <div className="my-3">
-              <h2 className="text-2xl font-semibold text-emerald-800">
+          <div className="rounded-2xl bg-white/75 border border-emerald-100 shadow-sm p-5 sm:p-6">
+            <div className="my-3 flex items-end justify-between gap-4 flex-wrap">
+              <h2 className="text-2xl font-semibold text-emerald-800 tracking-tight">
                 Properties for Sale
               </h2>
               <Link
-                className="text-sm text-emerald-600 hover:underline"
+                className="text-sm font-medium text-emerald-700 hover:text-emerald-900 hover:underline"
                 to={"/search?sale=true"}
               >
                 Show more properties
               </Link>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-5">
               {saleListings.map((listing) => (
                 <ListiningItem listing={listing} key={listing._id} />
               ))}

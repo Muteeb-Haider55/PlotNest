@@ -3,5 +3,41 @@
 @tailwind utilities;
 
 body {
-  background-color: rgb(241, 245, 241);
+  background-color: rgb(236, 253, 245);
+  color: rgb(15, 23, 42);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.premium-swiper .swiper-button-prev,
+.premium-swiper .swiper-button-next {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  background: rgba(6, 78, 59, 0.82);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 10px 25px rgba(6, 78, 59, 0.25);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.premium-swiper .swiper-button-prev:hover,
+.premium-swiper .swiper-button-next:hover {
+  background: rgba(5, 150, 105, 0.95);
+  transform: translateY(-1px) scale(1.03);
+}
+
+.premium-swiper .swiper-button-prev::after,
+.premium-swiper .swiper-button-next::after {
+  font-size: 16px;
+  font-weight: 900;
+  color: #ecfdf5;
+}
+
+.premium-swiper .swiper-button-disabled {
+  opacity: 0.35;
 }

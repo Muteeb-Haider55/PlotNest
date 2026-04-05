@@ -12,8 +12,8 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-emerald-700 text-white pt-12 pb-6">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-gradient-to-b from-emerald-800 to-emerald-900 text-white pt-14 pb-6 mt-8 border-t border-emerald-700/70">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Link to="/" className="flex items-center">
@@ -22,38 +22,38 @@ const Footer = () => {
                 <span className="text-white">Nest</span>
               </h1>
             </Link>
-            <p className="text-emerald-100 text-sm">
+            <p className="text-emerald-100/95 text-sm leading-6">
               Your premier destination for property listings and real estate
               solutions.
             </p>
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="text-emerald-100 hover:text-white transition"
+                className="text-emerald-100 hover:text-white transition hover:-translate-y-0.5 duration-200"
               >
                 <FaFacebook size={20} />
               </a>
               <a
                 href="#"
-                className="text-emerald-100 hover:text-white transition"
+                className="text-emerald-100 hover:text-white transition hover:-translate-y-0.5 duration-200"
               >
                 <FaTwitter size={20} />
               </a>
               <a
                 href="#"
-                className="text-emerald-100 hover:text-white transition"
+                className="text-emerald-100 hover:text-white transition hover:-translate-y-0.5 duration-200"
               >
                 <FaInstagram size={20} />
               </a>
               <a
                 href="#"
-                className="text-emerald-100 hover:text-white transition"
+                className="text-emerald-100 hover:text-white transition hover:-translate-y-0.5 duration-200"
               >
                 <FaLinkedin size={20} />
               </a>
               <a
                 href="#"
-                className="text-emerald-100 hover:text-white transition"
+                className="text-emerald-100 hover:text-white transition hover:-translate-y-0.5 duration-200"
               >
                 <FaYoutube size={20} />
               </a>
@@ -104,12 +104,12 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Your email"
-                className="px-3 py-2 text-sm text-gray-800 rounded-l focus:outline-none w-full"
+                className="px-3 py-2 text-sm text-gray-800 rounded-l-lg focus:outline-none w-full"
                 required
               />
               <button
                 type="submit"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-r text-sm font-medium transition"
+                className="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-r-lg text-sm font-medium transition"
               >
                 Subscribe
               </button>
@@ -118,7 +118,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Footer */}
-        <div className="border-t border-emerald-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-emerald-700/80 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-emerald-100 text-sm">
             &copy; {currentYear} PlotNest. All rights reserved.
           </p>
