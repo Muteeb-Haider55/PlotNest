@@ -72,6 +72,35 @@ Fixing them early saves hours of debugging and keeps users happy.
 🔗 **Live App:** [https://plot-nest-estate.vercel.app](https://plot-nest-estate.vercel.app)  
 💻 **GitHub Repo:** [https://github.com/Muteeb-Haider55/PlotNest](https://github.com/Muteeb-Haider55/PlotNest)
 
+---
+
+## 🧪 Run Locally
+
+Make sure both backend and frontend use local URLs:
+
+- `api/.env`
+  - `FRONTEND_URL=http://localhost:5173`
+  - `MONGO=...`
+  - `JWT_SECRET=...`
+- `client/.env`
+  - `VITE_API_BASE_URL=http://localhost:3000`
+
+Start both apps in separate terminals:
+
+- Backend
+  - `cd api`
+  - `npm install`
+  - `npm run dev`
+- Frontend
+  - `cd client`
+  - `npm install`
+  - `npm run dev`
+
+If login/listing API calls fail locally, check that:
+- backend is running on port `3000`
+- frontend is running on port `5173`
+- `FRONTEND_URL` has no trailing slash
+
 
 ---
 
